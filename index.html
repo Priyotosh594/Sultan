@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Stamina Coach</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #09090b;
+      color: #f43f5e;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 16px;
+      overflow-x: hidden;
+    }
+    .app-container {
+      background: linear-gradient(145deg, #18181b, #0f0f13);
+      border: 1px solid #27272a;
+      border-radius: 24px;
+      padding: 24px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 10px 30px rgba(244, 63, 94, 0.15);
+      text-align: center;
+    }
+    #phase-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #fda4af;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    #timer-display {
+      font-size: 48px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+      color: #fff;
+      text-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
+    }
+    .visual-box {
+      position: relative;
+      height: 200px;
+      background: #111115;
+      border-radius: 16px;
+      border: 1px solid #27272a;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    .motion-text {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #fda4af;
+      text-transform: uppercase;
+      z-index: 10;
+    }
+    .graphic-container {
+      position: relative;
+      width: 120px;
+      height: 180px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    /* Fixed outer structural channel */
+    .vulva-svg {
+      position: absolute;
+      width: 100px;
+      height: 160px;
+      z-index: 2;
+    }
+    /* Moving vertical component */
+    .phallus-svg {
+      position: absolute;
+      width: 44px;
+      height: 120px;
+      z-index: 1;
+      transform: translateY(40px);
+      transition: filter 0.3s;
+    }
+    #instruction-box {
+      background: #1e1e24;
+      border-left: 4px solid #f43f5e;
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 16px;
+      font-size: 13px;
+      line-height: 1.4;
+      color: #f1f5f9;
+      text-align: left;
+    }
+    .progress-track {
+      background: #27272a;
+      height: 6px;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, #e11d48, #fb7185);
+      width: 0%;
+      height: 100%;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+    button {
+      flex: 1;
+      padding: 12px;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      border: none;
+      transition: transform 0.1s;
+    }
+    button:active { transform: scale(0.97); }
+    #start-btn { background: #e11d48; color: #fff; box-shadow: 0 4px 12px rgba(225, 29, 72, 0.4); }
+    #freeze-btn { background: #d97706; color: #fff; display: none; }
+    #reset-btn { background: #27272a; color: #a1a1aa; }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <div id="phase-title">Phase 1: Entry & Stillness</div>
+    <div id="timer-display">15:00</div>
+
+    <div class="visual-box">
+      <div class="motion-text" id="motion-label">HOLD STILL</div>
+      
+      <div class="graphic-container">
+        <!-- Outer Structure Channel (Sultan / Vulva Visual) -->
+        <svg class="vulva-svg" viewBox="0 0 100 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 20,10 C 35,50 35,110 20,150" stroke="#fb7185" stroke-width="4" stroke-linecap="round" filter="drop-shadow(0px 0px 8px #f43f5e)"/>
+          <path d="M 80,10 C 65,50 65,110 80,150" stroke="#fb7185" stroke-width="4" stroke-linecap="round" filter="drop-shadow(0px 0px 8px #f43f5e)"/>
+          <!-- Inner ribbing accents -->
+          <path d="M 30,40 C 45,45 55,45 70,40" stroke="#9f1239" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 28,70 C 45,75 55,75 72,70" stroke="#9f1239" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 28,100 C 45,105 55,105 72,100" stroke="#9f1239" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 30,130 C 45,135 55,135 70,130" stroke="#9f1239" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+
+        <!-- Vertical Moving Penetration Shaft -->
+        <svg class="phallus-svg" id="anim-shaft" viewBox="0 0 44 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 7,120 L 7,40 C 7,20 15,5 22,5 C 29,5 37,20 37,40 L 37,120 Z" fill="url(#shaftGrad)" opacity="0.85"/>
+          <path d="M 7,40 C 7,25 22,25 22,25 C 22,25 37,25 37,40" stroke="#fda4af" stroke-width="2"/>
+          <defs>
+            <linearGradient id="shaftGrad" x1="22" y1="5" x2="22" y2="120" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#fb7185"/>
+              <stop offset="1" stop-color="#881337"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+
+    <div id="instruction-box">
+      <strong>Action:</strong> Insert into the sleeve. Stay completely still for 30 seconds to adjust to warmth and suction.
+    </div>
+
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-bar"></div>
+    </div>
+
+    <div class="btn-group">
+      <button id="start-btn" onclick="toggleTimer()">Start Drill</button>
+      <button id="freeze-btn" onclick="toggleFreeze()">Freeze (Level 6)</button>
+      <button id="reset-btn" onclick="resetTimer()">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    let totalSeconds = 15 * 60;
+    let remainingSeconds = totalSeconds;
+    let timerInterval = null;
+    let isRunning = false;
+    let isFrozen = false;
+    
+    let animStartTime = null;
+    let animFrameId = null;
+
+    function updateDisplay() {
+      let m = Math.floor(remainingSeconds / 60);
+      let s = remainingSeconds % 60;
+      document.getElementById('timer-display').textContent = 
+        String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+      
+      let pct = ((totalSeconds - remainingSeconds) / totalSeconds) * 100;
+      document.getElementById('progress-bar').style.width = pct + '%';
+      updatePhases(totalSeconds - remainingSeconds);
+    }
+
+    function updatePhases(elapsed) {
+      let pTitle = document.getElementById('phase-title');
+      let iBox = document.getElementById('instruction-box');
+      let freezeBtn = document.getElementById('freeze-btn');
+
+      if (elapsed < 60) {
+        pTitle.textContent = "Phase 1: Entry & Stillness";
+        iBox.innerHTML = "<strong>Action:</strong> Stay completely still. Let your nervous system adapt without thrusting.";
+        freezeBtn.style.display = "none";
+      } else if (elapsed < 240) {
+        pTitle.textContent = "Phase 2: Micro-Thrusting";
+        iBox.innerHTML = "<strong>Action:</strong> Very slow, shallow movements (20% speed). Focus on smooth breathing.";
+        freezeBtn.style.display = "block";
+      } else if (elapsed < 840) {
+        pTitle.textContent = "Phase 3: Active Stop-Start Loop";
+        iBox.innerHTML = "<strong>Action:</strong> Build rhythm. If arousal hits Level 6, tap <strong>Freeze</strong> immediately.";
+        freezeBtn.style.display = "block";
+      } else {
+        pTitle.textContent = "Phase 4: Cool-Down";
+        iBox.innerHTML = "<strong>Action:</strong> Slow down to a complete stop. Relax your pelvic floor and breathe.";
+        freezeBtn.style.display = "none";
+      }
+    }
+
+    function runAnimation(timestamp) {
+      if (!animStartTime) animStartTime = timestamp;
+      let elapsed = totalSeconds - remainingSeconds;
+      let shaft = document.getElementById('anim-shaft');
+      let label = document.getElementById('motion-label');
+
+      if (isFrozen || elapsed < 60 || elapsed >= 840) {
+        shaft.style.transform = `translateY(35px)`;
+        label.textContent = isFrozen ? "FREEZE / BREATHE" : "HOLD STILL";
+        shaft.style.filter = isFrozen ? "drop-shadow(0px 0px 10px #f59e0b)" : "none";
+        animFrameId = requestAnimationFrame(runAnimation);
+        return;
+      }
+
+      shaft.style.filter = "drop-shadow(0px 0px 8px #e11d48)";
+      let period = (elapsed < 240) ? 4000 : 2600; // Micro-thrust vs Active Stop-Start rhythm
+      let progress = ((timestamp - animStartTime) % period) / period;
+      
+      // Vertical penetration motion: translateY between +45px (outward) and -15px (deep inside)
+      let yPos = 15 + Math.sin(progress * 2 * Math.PI) * 30;
+      shaft.style.transform = `translateY(${yPos}px)`;
+      
+      label.textContent = Math.sin(progress * 2 * Math.PI) < 0 ? "PENETRATING IN" : "PULLING OUT";
+
+      animFrameId = requestAnimationFrame(runAnimation);
+    }
+
+    function toggleTimer() {
+      let btn = document.getElementById('start-btn');
+      if (!isRunning) {
+        if (remainingSeconds <= 0) remainingSeconds = totalSeconds;
+        isRunning = true;
+        isFrozen = false;
+        btn.textContent = "Pause";
+        btn.style.backgroundColor = "#d97706";
+        
+        timerInterval = setInterval(() => {
+          if (remainingSeconds > 0) {
+            remainingSeconds--;
+            updateDisplay();
+          } else {
+            clearInterval(timerInterval);
+            isRunning = false;
+            btn.textContent = "Start Drill";
+            btn.style.backgroundColor = "#e11d48";
+            cancelAnimationFrame(animFrameId);
+          }
+        }, 1000);
+
+        if (!animFrameId) animFrameId = requestAnimationFrame(runAnimation);
+      } else {
+        clearInterval(timerInterval);
+        isRunning = false;
+        btn.textContent = "Start Drill";
+        btn.style.backgroundColor = "#e11d48";
+      }
+    }
+
+    function toggleFreeze() {
+      isFrozen = !isFrozen;
+      let fBtn = document.getElementById('freeze-btn');
+      let iBox = document.getElementById('instruction-box');
+      if (isFrozen) {
+        fBtn.textContent = "Resume Rhythm";
+        fBtn.style.backgroundColor = "#059669";
+        iBox.innerHTML = "<strong>AROUSAL FREEZE ACTIVE:</strong> Stop all hip movement. Inhale 4s through nose, exhale 6s through mouth. Relax pelvic floor until arousal drops.";
+      } else {
+        fBtn.textContent = "Freeze (Level 6)";
+        fBtn.style.backgroundColor = "#d97706";
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      cancelAnimationFrame(animFrameId);
+      animFrameId = null;
+      animStartTime = null;
+      isRunning = false;
+      isFrozen = false;
+      remainingSeconds = totalSeconds;
+      document.getElementById('start-btn').textContent = "Start Drill";
+      document.getElementById('start-btn').style.backgroundColor = "#e11d48";
+      document.getElementById('freeze-btn').textContent = "Freeze (Level 6)";
+      document.getElementById('freeze-btn').style.backgroundColor = "#d97706";
+      updateDisplay();
+      document.getElementById('anim-shaft').style.transform = `translateY(40px)`;
+      document.getElementById('motion-label').textContent = "HOLD STILL";
+    }
+
+    updateDisplay();
+  </script>
+</body>
+</html>
